@@ -1,0 +1,17 @@
+<project name="todomvc-emberjs">
+	<property file="build.properties"/>
+	<property environment="env"/>
+
+	<target name="validate">
+		<apply executable="${env.JAVA_HOME}/bin/java" failonerror="true" parallel="true">
+			<fileset dir="${src.dir}" includes="**/*.js"/>
+			<arg value="-jar"/>
+			<arg path="${rhino}"/>
+			<arg path="${jshint}"/>
+			<srcfile/>
+			<!-- options have to be last: http://stackoverflow.com/questions/12588643/custom-settings-with-jshint-rhino-js -->
+			<!-- BUT, I think it would be better to have a .jshintrc file instead -->
+			<arg value="${jshint.options}"/>
+		</apply>
+	</target>
+</project>
