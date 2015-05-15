@@ -1,17 +1,47 @@
 <project name="todomvc-emberjs">
-	<property file="build.properties"/>
-	<property environment="env"/>
+    <property file="build.properties"/>
+    <property environment="env"/>
 
-	<target name="validate">
-		<apply executable="${env.JAVA_HOME}/bin/java" failonerror="true" parallel="true">
-			<fileset dir="${src.dir}" includes="**/*.js"/>
-			<arg value="-jar"/>
-			<arg path="${rhino}"/>
-			<arg path="${jshint}"/>
-			<srcfile/>
-			<!-- options have to be last: http://stackoverflow.com/questions/12588643/custom-settings-with-jshint-rhino-js -->
-			<!-- BUT, I think it would be better to have a .jshintrc file instead -->
-			<arg value="${jshint.options}"/>
-		</apply>
-	</target>
+    <tstamp>
+        <format property="build.time"
+                pattern="MMMM d, yyyy hh:mm:ss"
+                locale="en,US"/>
+    </tstamp>
+
+    <target name="validate">
+        <apply executable="${env.JAVA_HOME}/bin/java" failonerror="true" parallel="true">
+            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <arg value="-jar"/>
+            <arg path="${rhino}"/>
+            <arg path="${jshint}"/>
+            <srcfile/>
+            <!-- options have to be last: http://stackoverflow.com/questions/12588643/custom-settings-with-jshint-rhino-js -->
+            <!-- BUT, I think it would be better to have a .jshintrc file instead -->
+            <arg value="${jshint.options}"/>
+        </apply>
+    </target>
+
+    <target name="concatenate">
+        <!-- Note: we could also add a header or do replacements here -->
+        <concat destfile="${build.dir}/build.js" fixlastline="yes" eol="lf">
+            <filelist dir="${basedir}">
+                <file name="bower_components/todomvc-common/base.js"/>
+                <file name="bower_components/jquery/dist/jquery.js"/>
+                <file name="bower_components/handlebars/handlebars.js"/>
+                <file name="bower_components/ember/ember.js"/>
+                <file name="bower_components/ember-data/ember-data.js"/>
+                <file name="bower_components/ember-localstorage-adapter/localstorage_adapter.js"/>
+                <file name="js/app.js"/>
+                <file name="js/router.js"/>
+                <file name="js/models/todo.js"/>
+                <file name="js/controllers/todos_controller.js"/>
+                <file name="js/controllers/todos_list_controller.js"/>
+                <file name="js/controllers/todo_controller.js"/>
+                <file name="js/views/todo_input_component.js"/>
+                <file name="js/helpers/pluralize.js"/>
+            </filelist>
+            <footer>/* Build Time: ${build.time} */</footer>
+        </concat>
+    </target>
+
 </project>
