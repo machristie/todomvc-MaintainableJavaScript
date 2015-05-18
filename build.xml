@@ -44,4 +44,21 @@
         </concat>
     </target>
 
+    <target name="minify" depends="concatenate">
+        <apply executable="java" failonerror="true">
+            <fileset dir="${build.dir}" includes="build.js"/>
+            <mapper type="glob" from="*.js" to="${build.dir}/*-min.js"/>
+
+            <arg line="-jar"/>
+            <arg path="${closure.jar}"/>
+            <arg line="${closure.options}"/>
+
+            <arg line="--js"/>
+            <srcfile/>
+
+            <arg line="--js_output_file"/>
+            <targetfile/>
+        </apply>
+    </target>
+
 </project>
