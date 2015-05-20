@@ -21,7 +21,9 @@
         </apply>
     </target>
 
-    <target name="concatenate">
+    <target name="concatenate" depends="concatenate-js, concatenate-css"/>
+
+    <target name="concatenate-js">
         <!-- Note: we could also add a header or do replacements here -->
         <concat destfile="${build.dir}/build.js" fixlastline="yes" eol="lf">
             <filelist dir="${basedir}">
@@ -41,6 +43,14 @@
                 <file name="js/helpers/pluralize.js"/>
             </filelist>
             <footer>/* Build Time: ${build.time} */</footer>
+        </concat>
+    </target>
+
+    <target name="concatenate-css">
+        <concat destfile="${build.dir}/build.css" fixlastline="yes" eol="lf">
+            <filelist dir="${basedir}">
+                <file name="bower_components/todomvc-common/base.css"/>
+            </filelist>
         </concat>
     </target>
 
