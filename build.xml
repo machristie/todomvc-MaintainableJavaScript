@@ -54,6 +54,15 @@
         </concat>
     </target>
 
+    <target name="build">
+        <copy file="index.html" tofile="${build.dir}/index.html">
+            <filterset>
+                <filter token="BUILD_JS" value="build.js"/>
+                <filter token="BUILD_CSS" value="build.css"/>
+            </filterset>
+        </copy>
+    </target>
+
     <target name="minify" depends="concatenate">
         <apply executable="java" failonerror="true">
             <fileset dir="${build.dir}" includes="build.js"/>
