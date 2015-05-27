@@ -80,4 +80,25 @@
         </apply>
     </target>
 
+    <target name="jsdoc">
+        <apply executable="java" failonerror="true" parallel="true">
+            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <arg value="-classpath"/>
+            <arg file="${jsdoc.home}/rhino/js.jar"/>
+            <arg value="org.mozilla.javascript.tools.shell.Main"/>
+            <arg value="-modules"/>
+            <arg file="${jsdoc.home}/lib"/>
+            <arg value="-modules"/>
+            <arg file="${jsdoc.home}/node_modules"/>
+            <arg value="-modules"/>
+            <arg file="${jsdoc.home}/rhino"/>
+            <arg value="-modules"/>
+            <arg file="${jsdoc.home}"/>
+            <arg file="${jsdoc.home}/jsdoc.js"/>
+            <arg value="-d"/>
+            <arg file="${jsdoc.output}"/>
+            <srcfile/>
+        </apply>
+    </target>
+
 </project>
